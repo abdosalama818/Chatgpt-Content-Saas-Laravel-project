@@ -37,6 +37,8 @@
 
                             <div class="pt-0">
 
+{{--                                 <h1>{{ session('verification_code') }}</h1>
+ --}}
     @if (session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
