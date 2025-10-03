@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Mail\VerificationCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -33,11 +35,11 @@ class AdminController extends Controller
                 Mail::to($user->email)->send(new VerificationCode($code));
 
                 Auth::logout(); // Log out the user until they verify
-                return redirect()->route('custom.verification')->with('status', 'A verification code has been sent to your email.');
+                return redirect()->route('custom.verificationform')->with('status', 'A verification code has been sent to your email.');
             }
             return redirect()->back()->withErrors(['email' => 'Invalid credentials.']);
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => $e]);
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
@@ -66,5 +68,72 @@ class AdminController extends Controller
         } else {
             return redirect()->back()->withErrors(['code' => 'Invalid verification code.']);
         }
+    }
+    public function adminProfile()
+    {
+        $profileData = Auth::guard('web')->user();
+        return view('admin.admin_profile', compact('profileData'));
+    }
+
+    public function storeProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'phone' =>"sometimes|min:10",
+            'address' => "nullable",
+            'photo' =>"nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+
+        ]);
+        $user = Auth::guard('web')->user();
+
+        $path = $user->photo; // Default to existing photo path
+
+        if($request->hasFile('photo')){
+            if($user->photo && Storage::exists($user->photo)){
+                Storage::delete($user->photo);
+            }
+             $path = Storage::putFile('user_images', $request->file('photo'));
+
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->photo = $path;
+        $user->save();
+
+        $notification = array(
+            'message' => 'Profile Updated Successfully',
+            'alert-type' => 'success'
+        );
+
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:8|confirmed|confirmed',
+        ]);
+
+        $user = Auth::guard('web')->user();
+
+        if (!Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->withErrors(['old_password' => 'The provided password does not match your current password.']);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        $notification = array(
+            'message' => 'Password Updated Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
 }

@@ -37,8 +37,8 @@
 
                             <div class="pt-0">
 
-{{--                                 <h1>{{ session('verification_code') }}</h1>
- --}}
+                                <h1>verification code : {{ session('verification_code') }}</h1>
+ 
     @if (session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -55,7 +55,7 @@
         </div>        
     @endif
     
-    <form  method="POST" action="{{ route('custom.verification.verify') }}" class="my-4">
+    <form  method="POST" action="{{ route('custom.verification') }}" class="my-4">
         @csrf
 
         @if (session('error'))

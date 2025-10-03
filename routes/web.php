@@ -22,12 +22,13 @@ Route::middleware('auth')->group(function () {
     
 Route::post('admin/login', [AdminController::class, 'login'])->name('admin.login');
 Route::get('verify', [AdminController::class, 'showVerification'])->name('custom.verificationform');
-Route::post('email/verify', [AdminController::class, 'customVerification'])->name('custom.verification.verify');
+Route::post('email/verify', [AdminController::class, 'customVerification'])->name('custom.verification');
 
 Route::middleware('auth')->group(function () {
-
-
     Route::get('admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+    Route::get('/profile', [AdminController::class, 'adminProfile'])->name('admin.profile');
+    Route::post('/store/profile', [AdminController::class, 'storeProfile'])->name('profile.store');
+    Route::post('/passworf/update', [AdminController::class, 'updatePassword'])->name('admin.password.update');
 
 
 
@@ -39,7 +40,6 @@ Route::middleware('auth')->group(function () {
 
 
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('admin.profile');
     Route::get('/xxax', [ProfileController::class, 'destroy'])->name('all.review');
     Route::get('/xxx', [ProfileController::class, 'destroy'])->name('add.review');
     Route::get('/slider', [ProfileController::class, 'destroy'])->name('get.slider');
