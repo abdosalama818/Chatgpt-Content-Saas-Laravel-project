@@ -37,7 +37,7 @@
 
  <form action="{{ route('update.slider') }}" method="post" enctype="multipart/form-data">
     @csrf
-    
+    @method('PATCH')
     <input type="hidden" name="id" value="{{ $slider->id }}">
 
 <div class="card-body">
@@ -73,7 +73,7 @@
     <div class="form-group mb-3 row">
         <label class="form-label"> </label>
         <div class="col-lg-12 col-xl-12">
-            <img id="showImage" src="{{ asset($slider->image) }}" class="rounded-circle avatar-xxl img-thumbnail float-start" alt="image profile">   
+            <img id="showImage" src="{{ asset("upload/" . $slider->image) }}" class="rounded-circle avatar-xxl img-thumbnail float-start" alt="image profile">   
 
         </div>
     </div>

@@ -37,7 +37,7 @@
                 <td>{{ $key+1 }}</td>
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->position }}</td>
-                <td> <img src="{{ asset($item->image) }}" style="width:70px; height:40px;"> </td>
+                <td> <img src="{{ asset("upload" ."/". $item->image) }}" style="width:70px; height:40px;"> </td>
                 <td>{{ Str::limit($item->message, 50, '...')  }}</td>
                 <td>
     <a href="{{ route('edit.review',$item->id) }}" class="btn btn-success btn-sm">Edit</a>  
