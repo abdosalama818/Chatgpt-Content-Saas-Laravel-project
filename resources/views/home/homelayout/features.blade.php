@@ -23,7 +23,8 @@
           <div class="lonyo-service-wrap light-bg" data-aos="fade-up" data-aos-duration="500">
             <div class="lonyo-service-title">
               <h4>{{ $item->title }}</h4>
-              <img src="{{ asset('frontend/assets/images/v1/'.$item->icon.'.svg') }}" alt="">
+                  {!! $item->icon !!} 
+
             </div>
             <div class="lonyo-service-data">
               <p>{{ $item->description }}</p>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AdminController;
+use App\Http\Controllers\Backend\HomeController;
 use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\ProfileController;
@@ -49,7 +50,48 @@ Route::middleware('auth')->group(function () {
         Route::get('slider', 'AllSlider')->name('get.slider');
         Route::patch('/update/slider', 'UpdateSlider')->name('update.slider');
         Route::post('/edit-slider/{id}', 'EditSlider')->name('Edit.slider'); //edit when click (js)
+        Route::post('/edit-features/{id}', 'EditFeature')->name('edit.features'); //edit{feature} when click (js)
+        Route::post('/edit-review/{id}', 'EditReviewe')->name('edit.review'); //edit{review} when click (js)
+        Route::post('/edit-answers/{id}', 'EditAnswers')->name('edit.answers'); //edit{answers} when click (js)
 
+
+    });
+
+       Route::controller(HomeController::class)->group(function () {
+        Route::get('feature', 'allFeature')->name('all.feature');
+        Route::get('/feature/add', 'addFeature')->name('add.feature');
+        Route::post('/feature/store', 'storeFeature')->name('store.feature');
+        Route::get('/feature/edit/{id}', 'editFeature')->name('edit.feature');
+        Route::post('/feature/update', 'updateFeature')->name('update.feature');
+        Route::get('/feature/delete/{id}', 'deleteFeature')->name('delete.feature');
+
+
+        /* **************************************clarifies  *************************** */
+    Route::get('/clarifies', 'clarifies')->name('get.clarifies');
+    Route::post('/clarifies/update', 'updateClarifies')->name('update.clarifi');
+        /* **************************************usability  *************************** */
+
+    Route::get('/usability', 'getUsability')->name('get.usability');
+    Route::post('/update/usability', 'updateUsability')->name('update.usability');
+
+
+            /* **************************************connect  *************************** */
+
+    Route::get('/connect', 'getConnect')->name('all.connect');
+    Route::get('/add/connect', 'addConnect')->name('add.connect');
+    Route::post('/store/connect', 'storeConnect')->name('store.connect');
+    Route::post('/update-connect/{id}', 'updateConnect')->name('update.connect'); //js
+
+            /* ************************************** faqs  *************************** */
+
+
+    Route::get('/add/faqs',  'addFaqs')->name('add.faqs');
+    Route::post('/store/faqs',  'storeFaqs')->name('store.faqs');
+    Route::get('/all/faqs', 'allFaqs')->name('all.faqs');
+    Route::get('/edit/faqs/{id}', 'editFaqs')->name('edit.faqs');
+    Route::get('/delete/faqs/{id}', 'deleteFaqs')->name('delete.faqs');
+    Route::post('/update/faqs', 'updateFaqs')->name('update.faqs');
+ 
     });
 
 
@@ -59,16 +101,13 @@ Route::middleware('auth')->group(function () {
 
 
 
+
+
    
-    Route::get('/feature', [ProfileController::class, 'destroy'])->name('all.feature');
-    Route::get('/featureadd', [ProfileController::class, 'destroy'])->name('add.feature');
-    Route::get('/clarifies', [ProfileController::class, 'destroy'])->name('get.clarifies');
-    Route::get('/usability', [ProfileController::class, 'destroy'])->name('get.usability');
-    Route::get('/dv', [ProfileController::class, 'destroy'])->name('all.connect');
+
     Route::get('/dadadxcv', [ProfileController::class, 'destroy'])->name('add.faqs');
     Route::get('/dadadv', [ProfileController::class, 'destroy'])->name('all.faqs');
-     Route::get('/connect', [ProfileController::class, 'destroy'])->name('add.connect');
-    Route::get('/connfect', [ProfileController::class, 'destroy'])->name('all.connect');
+  
     Route::get('/connitemsfect', [ProfileController::class, 'destroy'])->name('all.items');
     Route::get('/team', [ProfileController::class, 'destroy'])->name('all.team');
     Route::get('/tadeam', [ProfileController::class, 'destroy'])->name('add.team');

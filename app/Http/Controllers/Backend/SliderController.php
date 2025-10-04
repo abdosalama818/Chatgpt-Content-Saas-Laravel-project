@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Feature;
 use App\Models\Slider;
+use App\Models\Title;
 use App\Trait\QueryTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -68,5 +70,38 @@ class SliderController extends Controller
         $slider->save();
         return response()->json(['success'=>true]);
     }
+
+    public function EditFeature(Request $request,$id){
+        $title = Title::findOrFail($id);
+        if($request->has('features')){
+            $title->features = $request->features;
+        }
+         $title->save();
+        return response()->json(['success'=>true]);
+    }
+
+
+        public function EditReviewe(Request $request,$id){
+        $title = Title::findOrFail($id);
+        if($request->has('review')){
+            $title->reviews = $request->review;
+        }
+         $title->save();
+        return response()->json(['success'=>true]);
+    }
+
+            public function EditAnswers(Request $request,$id){
+        $title = Title::findOrFail($id);
+        if($request->has('answers')){
+            $title->answers = $request->answers;
+        }
+         $title->save();
+        return response()->json(['success'=>true]);
+    }
+    
+    
+
+    
+
     
 }

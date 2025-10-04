@@ -6,8 +6,10 @@
       <div class="row">
         <div class="col-lg-5">
           <div class="lonyo-video-thumb">
-            <img src="{{ asset($usability->image ) }}" alt="">
-            <a class="play-btn video-init" href="{{ $usability->youtube }}">
+            <img src="{{ asset("upload/" . $usability->image ) }}" alt="">
+             <a class="play-btn video-init" href="{{ $usability->youtube }}"> 
+              
+
               <img src="{{ asset('frontend/assets/images/v1/play-icon.svg') }}" alt="">
               <div class="waves wave-1"></div>
               <div class="waves wave-2"></div>
